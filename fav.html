@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM-3</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <!-- Dont make any changes here -->
+    <h1>Fav Page</h1>
+
+    <center>
+        <a href="./index.html">Home Page</a>
+    </center>
+
+
+    <div>
+        <!-- ***** We are using form here  ****  -->
+
+        <table>
+            <!-- Dont change order of columns -->
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Priority</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Append your output to tbody -->
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let favArr = JSON.parse(localStorage.getItem("fav")) || [];
+
+    displayTable(favArr);
+
+    function displayTable(arr) {
+        //arr = [{},{},{}]
+
+        document.querySelector("tbody").innerText = "";
+        arr.forEach((el, i) => {
+            const row = document.createElement("tr");
+
+            const td1 = document.createElement("td");
+            td1.innerText = el.taskName;
+
+            const td2 = document.createElement("td");
+            td2.innerText = el.taskPriority;
+
+            const addToFav = document.createElement("button");
+            addToFav.innerText = "Delete";
+
+            addToFav.addEventListener("click", function () {
+                favArr.splice(i, 1);
+                localStorage.setItem("fav", JSON.stringify(favArr));
+                alert("Todo Deleted to Fav");
+                displayTable(favArr)
+            });
+
+            row.append(td1, td2, addToFav);
+
+            document.querySelector("tbody").append(row);
+        });
+    }
+
+</script>
